@@ -1,0 +1,16 @@
+{
+	"id": "000",
+	
+	"accept-charset": "UNKNOWN",
+	"action": "url",
+	"autocomplete": "on",
+	"enctype": "text/plain",
+	"method": "post",
+	"name": "form-name",
+	"novalidate": false,
+	
+	"header": "",
+	"footer": "",
+	
+	"elements": null
+}

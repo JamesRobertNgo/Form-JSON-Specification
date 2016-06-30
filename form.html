@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	
+	<title>Form JSON Specification Test</title>
+</head>
+
+<body>
+	
+	<h1>Form JSON Specification Test</h1>
+	
+	<section id="target">
+		<form action="/my-handling-form-page" method="post">
+			<div>
+				<label for="name">Name:</label>
+				<input type="text" id="name" name="user_name" />
+			</div>
+			<div>
+				<label for="mail">E-mail:</label>
+				<input type="email" id="mail" name="user_mail" />
+			</div>
+			<div>
+				<label for="msg">Message:</label>
+				<textarea id="msg" name="user_message"></textarea>
+			</div>
+
+			<div class="button">
+				<button type="submit">Send your message</button>
+			</div>
+		</form>
+	</section>
+	
+	<section id="placeholder"></section>
+	
+	<script>
+		
+		/* ================================================== *\
+		   FORM CONFIG JSON
+		\* ================================================== */
+		
+		var formConfig = {
+			
+			"id": "000",
+			
+			"action": "/my-handling-form-page",
+			"method": "post",
+			
+			"elements": [{
+				
+				"id": "000",
+				"name": "user_name",
+				
+				"typeCode": "TEXT",
+				"typeName": "Text Input",
+				
+				"attributes": [{
+					
+					"id": "000",
+					
+					"typeCode": "LABEL",
+					"typeName": "Label",
+					
+					"value": "Name"
+				}]
+			}]
+		}
+		
+		/* ================================================== *\
+		   COMMON FUNCTIONS
+		\* ================================================== */
+		
+		
+		window.buildElements = function(elementData, form) {
+			
+			for (var i = 0; i < elementData.length; i++) {
+				
+				var functionName = 'buildElement_' + elementData[i]['typeCode'];
+			
+				if (!!window[functionName]) {
+					window[functionName](elementData[i], form);
+				}
+			}
+		}
+		
+		window.buildAttributes = function(elementTypeCode, attributeData, element, form) {
+			
+			for (var i = 0; i < attributeData.length; i++) {
+				var functionName = 'buildAttribute_' + elementTypeCode + '_' + attributeData['code'];
+			
+				if (!!window[functionName]) {
+					window[functionName](attributeData[i], element, form);
+				}
+			}
+		}
+		
+		/* ================================================== *\
+		   TEXT ELEMENT BUILDER
+		\* ================================================== */
+		
+		// ATTRIBUTE
+		
+		window.buildAttribute_TEXT_LABEL = function(attributeData[i], element, form) {
+			
+		}
+		
+		// ELEMENT
+		
+		window.buildElement_TEXT = function(elementData, form) {
+			
+			var id = 'TEXT_' + elementData['id'];
+			
+			// DIV
+			
+			var div = document.createElement('div');
+			div.setAttribute('id', id + '_container');
+			
+			// LABEL
+			
+			var label = document.createElement('label');
+			label.setAttribute('for', id);
+			
+			div.appendChild(label);
+			
+			// INPUT
+			
+			var input = document.createElement('input');
+			input.setAttribute('id', id);
+			input.setAttribute('name', elementData['name']);
+			input.setAttribute('type', 'text');
+			
+			div.appendChild(input);
+			
+			// APPEND TO FORM
+			
+			form.appendChild(div);
+		}
+		
+		/* ================================================== *\
+		   FORM BUILDER
+		\* ================================================== */
+		
+		window.buildForm = function(formConfig, placeholder) {
+			
+			var form = document.createElement('form');
+			
+			form.setAttribute('id', 'FORM_' + formConfig['id']);
+			
+			if (!!formConfig['action']) {
+				form.setAttribute('action', formConfig['action']);
+			}
+			
+			if (!!formConfig['method']) {
+				form.setAttribute('method', formConfig['method']);
+			}
+			
+			window.buildElements(formConfig['elements'], form);
+			
+			placeholder.appendChild(form);
+		}
+		
+		/* ================================================== *\
+		   EXECUTE
+		\* ================================================== */
+		
+		var placeholder = document.getElementById('placeholder');
+		
+		window.buildForm(formConfig, placeholder);
+		
+	</script>
+</body>
+
+</html>
