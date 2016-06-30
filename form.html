@@ -87,9 +87,13 @@
 		
 		window.buildAttributes = function(elementTypeCode, attributeData, element, form) {
 			
-			for (var i = 0; i < attributeData.length; i++) {
-				var functionName = 'buildAttribute_' + elementTypeCode + '_' + attributeData['code'];
+			console.log(arguments);
 			
+			for (var i = 0; i < attributeData.length; i++) {
+				var functionName = 'buildAttribute_' + elementTypeCode + '_' + attributeData[i]['typeCode'];
+				
+				console.log(functionName);
+				
 				if (!!window[functionName]) {
 					window[functionName](attributeData[i], element, form);
 				}
@@ -102,15 +106,18 @@
 		
 		// ATTRIBUTE
 		
-		window.buildAttribute_TEXT_LABEL = function(attributeData[i], element, form) {
-			
+		window.buildAttribute_TEXT_LABEL = function(attributeData, element, form) {
+			console.log(arguments);
+			var label = element.getElementsByTagName('label')[0];
+			console.log(label);
+			label.innerHTML = attributeData['value'];
 		}
 		
 		// ELEMENT
 		
 		window.buildElement_TEXT = function(elementData, form) {
 			
-			var id = 'TEXT_' + elementData['id'];
+			var id = elementData['typeCode'] + '_' + elementData['id'];
 			
 			// DIV
 			
@@ -132,6 +139,10 @@
 			input.setAttribute('type', 'text');
 			
 			div.appendChild(input);
+			
+			// ATTRIBUTES
+			
+			window.buildAttributes(elementData['typeCode'], elementData['attributes'], form);
 			
 			// APPEND TO FORM
 			
