@@ -1,0 +1,224 @@
+	window.buildElements = function(elementData, form) {
+			
+			for (var i = 0; i < elementData.length; i++) {
+				
+				var functionName = 'buildElement_' + elementData[i]['typeCode'];
+			
+				if (!!window[functionName]) {
+					window[functionName](elementData[i], form);
+				}
+			}
+		}
+		
+		window.buildAttributes = function(elementTypeCode, attributeData, element, form) {
+			
+			console.log(arguments);
+			
+			for (var i = 0; i < attributeData.length; i++) {
+				var functionName = 'buildAttribute_' + elementTypeCode + '_' + attributeData[i]['typeCode'];
+				
+				console.log(functionName);
+				
+				if (!!window[functionName]) {
+					window[functionName](attributeData[i], element, form);
+				}
+			}
+		}
+		
+
+element(data, form)
+
+element(data, element, form)
+
+
+====================
+FMODTYPE
+====================
+FMODTYPE_CD (PK)
+NAME
+BUILDER
+
+
+====================
+FORM
+====================
+FORM_ID (PK)
+ACTION
+METHOD
+
+
+====================
+FORM_FMOD
+====================
+FORM_FMOD_ID (PK)
+DATA
+--------------------
+FORM_ID (FK)
+FMODTYPE_CD (FK)
+
+====================
+ELEMENTTYPE
+====================
+ELEMENTTYPE_CD (PK)
+NAME
+BUILDER
+
+
+====================
+MODTYPE
+====================
+MODTYPE_CD (PK)
+NAME
+BUILDER
+--------------------
+ELEMENTTYPE_CD (FK)
+
+
+====================
+ELEMENT
+====================
+ELEMENT_ID (PK)
+NAME
+--------------------
+ELEMENT_PARENT_ID (FK)
+ELEMENTTYPE_CD (FK)
+
+
+====================
+ELEMENT_MOD
+====================
+ELEMENT_MOD_ID (PK)
+DATA
+--------------------
+ELEMENT_ID (FK)
+MODTYPE_CD (FK)
+
+
+
+
+form = {
+	
+	mods: [{
+		
+	}, {
+		
+	}]
+	
+	
+}
+
+
+
+/*========================================*\
+| FORM                                     |
+|==========================================|
+| PK | FORM_ID                             |
+|    | NAME                                |
+|    | DESCRIPTION                         |
+|    | ACTON                               |
+|    | METHOD                              |
+\*========================================*/
+
+/*========================================*\
+| FORMMODTYPE                              |
+|==========================================|
+| PK | FORMMODTYPE_CD                      |
+|    | NAME                                |
+|    | CODE                                |
+\*========================================*/
+
+/*========================================*\
+| FORMMOD                                  |
+|==========================================|
+| PK | FORMMOD_ID                          |
+|    | DATA                                |
+| FK | FORM_ID                             |
+| FK | FORMMODTYPE_CD                      |
+\*========================================*/
+
+/*========================================*\
+| ELEMENTTYPE                              |
+|==========================================|
+| PK | ELEMENTTYPE_CD                      |
+|    | NAME                                |
+|    | ISCONTAINER                         |
+|    | CODE                                |
+\*========================================*/
+
+/*========================================*\
+| ELEMENT                                  |
+|==========================================|
+| PK | ELEMENT_ID                          |
+|    | NAME                                |
+| FK | ELEMENTTYPE_CD                      |
+\*========================================*/
+
+/*========================================*\
+| ELEMENTMODTYPE                           |
+|==========================================|
+| PK | ELEMENTMOD_CD                       |
+|    | NAME                                |
+|    | CODE                                |
+| FK | ELEMENTTYPE_CD                      |
+\*========================================*/
+
+/*========================================*\
+| ELEMENTMOD                               |
+|==========================================|
+| PK | ELEMENTMOD_ID                       |
+|    | DATA                                |
+| FK | ELEMENT_ID                          |
+| FK | ELEMENTMOD_CD                       |
+\*========================================*/
+
+
+
+====================
+ELEMENTTYPE
+====================
+ELEMENTTYPE_CD (PK)
+NAME
+DESCRIPTION
+CODE
+IS_CONTAINER
+
+
+====================
+ATTRIBUTETYPE
+====================
+ATTRIBUTETYPE_CD (PK)
+NAME
+DESCRIPTION
+
+
+====================
+MODTYPE
+====================
+MODTYPE_CD (PK)
+NAME
+DESCRIPTION
+CODE
+--------------------
+ELEMENTTYPE_CD (FK)
+
+
+====================
+ELEMENT
+====================
+ELEMENT_ID (PK)
+NAME
+--------------------
+ELEMENT_PARENT_ID (FK)
+ELEMENTTYPE_CD (FK)
+
+
+====================
+ELEMENT_MOD
+====================
+ELEMENT_MOD_ID (PK)
+DATA
+--------------------
+ELEMENT_ID (FK)
+MODTYPE_CD (FK)
+
+

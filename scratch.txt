@@ -1,0 +1,136 @@
+xsltproc form_js.xslt form_source.xml > form.js
+
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<opendata ver="1.0">
+
+<records>
+
+<!-- FORM -->
+
+<record>
+	<data>
+		<property name="1" value="FORM"/>
+		<property name="2" value="FORM_ID_1"/>
+		<property name="3" value="NAME"/>
+		<property name="4" value="DESCRIPTION"/>
+		<property name="5" value="ACTON"/>
+		<property name="6" value="METHOD"/>
+		<property name="7" value="null"/>
+	</data>
+</record>
+
+<!-- FATT -->
+
+<!-- FMOD -->
+
+<record>
+	<data>
+		<property name="1" value="FMOD"/>
+		<property name="2" value="FORMMOD_ID_1"/>
+		<property name="3" value="DATA"/>
+		<property name="4" value="FORM_HEADER"/>
+		<property name="5" value="form Header"/>
+		<property name="6" value="alert('FORM_HEADER');"/>
+		<property name="7" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="FMOD"/>
+		<property name="2" value="FORMMOD_ID_2"/>
+		<property name="3" value="DATA"/>
+		<property name="4" value="FORM_FOOTER"/>
+		<property name="5" value="Form Footer"/>
+		<property name="6" value="alert('FORM_FOOTER');"/>
+		<property name="7" value="null"/>
+	</data>
+</record>
+
+<!-- ELEM -->
+
+<record>
+	<data>
+		<property name="1" value="ELEM"/>
+		<property name="2" value="ELEMENT_ID_1"/>
+		<property name="3" value="NAME"/>
+		<property name="4" value="null"/>
+		<property name="5" value="TEXT"/>
+		<property name="6" value="Text Input"/>
+		<property name="7" value="alert('TEXT');"/>
+	</data>
+</record>
+
+<!-- EATT -->
+
+<record>
+	<data>
+		<property name="1" value="EATT"/>
+		<property name="2" value="ELEMENTATTRIBUTE_ID_1"/>
+		<property name="3" value="Required"/>
+		<property name="4" value="ELEMENT_ID_1"/>
+		<property name="5" value="REQUIRED"/>
+		<property name="6" value="Required"/>
+		<property name="7" value="required"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="EATT"/>
+		<property name="2" value="ELEMENTATTRIBUTE_ID_2"/>
+		<property name="3" value="classname1, classname2"/>
+		<property name="4" value="ELEMENT_ID_1"/>
+		<property name="5" value="CLASS"/>
+		<property name="6" value="Class"/>
+		<property name="7" value="class"/>
+	</data>
+</record>
+
+<!-- EMOD -->
+
+<record>
+	<data>
+		<property name="1" value="EMOD"/>
+		<property name="2" value="ELEMENTMOD_ID_1"/>
+		<property name="3" value="Name"/>
+		<property name="4" value="ELEMENT_ID_1"/>
+		<property name="5" value="TEXT_LABEL"/>
+		<property name="6" value="Text Input Label"/>
+		<property name="7" value="alert('TEXT_LABEL')"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="EMOD"/>
+		<property name="2" value="ELEMENTMOD_ID_1"/>
+		<property name="3" value="null"/>
+		<property name="4" value="ELEMENT_ID_1"/>
+		<property name="5" value="TEXT_LABEL"/>
+		<property name="6" value="Text Input Label"/>
+		<property name="7" value="alert('TEXT_LABEL')"/>
+	</data>
+</record>
+
+<!--
+<record>
+	<data>
+		<property name="1" value=""/>
+		<property name="2" value=""/>
+		<property name="3" value=""/>
+		<property name="4" value=""/>
+		<property name="5" value=""/>
+		<property name="6" value=""/>
+		<property name="7" value=""/>
+	</data>
+</record>
+-->
+
+</records>
+
+</opendata>

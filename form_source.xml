@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<opendata ver="1.0">
+
+<records>
+
+<!-- PARAMETER -->
+
+<record>
+	<data>
+		<property name="1" value="P"/>
+		<property name="2" value="FORM_ID_1"/>
+		<property name="3" value="PLACEHOLDER"/>
+		<property name="4" value="null"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
+		<property name="7" value="null"/>
+		<property name="8" value="null"/>
+		<property name="9" value="null"/>
+	</data>
+</record>
+
+<!-- FORM -->
+
+<record>
+	<data>
+		<property name="1" value="F"/>
+		<property name="2" value="FORM_ID_1"/>
+		<property name="3" value="NAME"/>
+		<property name="4" value="DESCRIPTION"/>
+		<property name="5" value="ACTON"/>
+		<property name="6" value="METHOD"/>
+		<property name="7" value="null"/>
+		<property name="8" value="null"/>
+		<property name="9" value="null"/>
+	</data>
+</record>
+
+<!-- FORM ATTRIBUTE -->
+
+<record>
+	<data>
+		<property name="1" value="FA"/>
+		<property name="2" value="FORMATTRIBUTE_ID_1"/>
+		<property name="3" value="required"/>
+		<property name="4" value="required"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
+		<property name="7" value="null"/>
+		<property name="8" value="null"/>
+		<property name="9" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="FA"/>
+		<property name="2" value="FORMATTRIBUTE_ID_2"/>
+		<property name="3" value="class"/>
+		<property name="4" value="sampleClass1, sampleClass2"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
+		<property name="7" value="null"/>
+		<property name="8" value="null"/>
+		<property name="9" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="FA"/>
+		<property name="2" value="FORMATTRIBUTE_ID_3"/>
+		<property name="3" value="autocomplete"/>
+		<property name="4" value="true"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
+		<property name="7" value="null"/>
+		<property name="8" value="null"/>
+		<property name="9" value="null"/>
+	</data>
+</record>
+
+<!-- FORM MOD -->
+
+<record>
+	<data>
+		<property name="1" value="FM"/>
+		<property name="2" value="FORMMOD_ID_1"/>
+		<property name="3" value="&lt;h1&gt;My Form&lt;/h1&gt;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tempus lorem tempus risus semper rhoncus. Donec id vulputate nibh. Cras fringilla arcu erat, eget tristique metus laoreet vitae. Cras auctor, purus sit amet laoreet lobortis, urna tellus consequat lectus, et bibendum nunc nisi at dolor. Nam et tristique eros. Maecenas ut eleifend est, eget malesuada metus. Maecenas semper hendrerit tristique. Donec eget luctus arcu. Etiam sed enim laoreet nisi gravida tempus vestibulum nec ligula. Aenean vulputate dapibus sapien eget consequat. Ut tristique semper enim eget elementum. Sed sagittis purus suscipit elit volutpat porta. Nulla tincidunt egestas velit. Phasellus bibendum congue rhoncus. Phasellus feugiat enim eget dignissim tincidunt. Interdum et malesuada fames ac ante ipsum primis in faucibus.&lt;/p&gt;"/>
+		<property name="4" value="HTML"/>
+		<property name="5" value="HTML Content"/>
+		<property name="6" value="
+			var data = arguments[0];
+			var form = arguments[1];
+			var div = document.createElement('div');
+			div.setAttribute('id', data.typeCode + '_' + data.id);
+			div.innerHTML = data.data;
+			form.appendChild(div);
+		"/>
+		<property name="7" value="null"/>
+		<property name="8" value="null"/>
+		<property name="9" value="null"/>
+	</data>
+</record>
+
+<!-- ELEMENT -->
+
+<record>
+	<data>
+		<property name="1" value="E"/>
+		<property name="2" value="ELEMENT_ID_1"/>
+		<property name="3" value="NAME"/>
+		<property name="4" value="LABEL"/>
+		<property name="5" value="null"/>
+		<property name="6" value="TEXT"/>
+		<property name="7" value="Text Input"/>
+		<property name="8" value="
+			var data = arguments[0];
+			var parent = arguments[1];
+			var form = arguments[2];
+			var p = document.createElement('p');
+			var label = document.createElement('label');
+			label.innerHTML = data.label;
+			p.appendChild(label);
+			var input = document.createElement('input');
+			input.setAttribute('type', 'text');
+			input.setAttribute('id', data.typeCode + '_' + data.id);
+			p.appendChild(input);
+			parent.appendChild(p);
+			return p; 
+		"/>
+		<property name="9" value="
+			var element = arguments[0];
+			var attributeElement = element.getElementsByTagName('input')[0];
+			return attributeElement;
+		"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="E"/>
+		<property name="2" value="ELEMENT_ID_2"/>
+		<property name="3" value="NAME"/>
+		<property name="4" value="LABEL"/>
+		<property name="5" value="null"/>
+		<property name="6" value="SELECT"/>
+		<property name="7" value="Select Input"/>
+		<property name="8" value="
+			var data = arguments[0];
+			var parent = arguments[1];
+			var form = arguments[2];
+			var p = document.createElement('p');
+			var label = document.createElement('label');
+			label.innerHTML = data.label;
+			p.appendChild(label);
+			var select = document.createElement('select');
+			select.setAttribute('id', data.typeCode + '_' + data.id);
+			p.appendChild(select);
+			parent.appendChild(p);
+			return p; 
+		"/>
+		<property name="9" value="
+			var element = arguments[0];
+			var attributeElement = element.getElementsByTagName('select')[0];
+			return attributeElement;
+		"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="E"/>
+		<property name="2" value="ELEMENT_ID_3"/>
+		<property name="3" value="NAME"/>
+		<property name="4" value="Option1"/>
+		<property name="5" value="ELEMENT_ID_2"/>
+		<property name="6" value="OPTION"/>
+		<property name="7" value="Select Input"/>
+		<property name="8" value="
+			var data = arguments[0];
+			var parent = arguments[1];
+			var form = arguments[2];
+			/*Need to look into this*/
+			var select = parent.getElementsByTagName('select')[0];
+			var option = document.createElement('option');
+			option.innerHTML = data.label;
+			select.appendChild(option);
+			return option; 
+		"/>
+		<property name="9" value="null"/>
+	</data>
+</record>
+
+<!-- ELEMENT ATTRIBUTE -->
+
+<record>
+	<data>
+		<property name="1" value="EA"/>
+		<property name="2" value="ELEMENTATTRIBUTE_ID_1"/>
+		<property name="3" value="required"/>
+		<property name="4" value="required"/>
+		<property name="5" value="ELEMENT_ID_1"/>
+		<property name="6" value="null"/>
+		<property name="7" value="null"/>
+		<property name="8" value="null"/>
+		<property name="9" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="EA"/>
+		<property name="2" value="ELEMENTATTRIBUTE_ID_2"/>
+		<property name="3" value="class"/>
+		<property name="4" value="sampleClass1, sampleClass2"/>
+		<property name="5" value="ELEMENT_ID_2"/>
+		<property name="6" value="null"/>
+		<property name="7" value="null"/>
+		<property name="8" value="null"/>
+		<property name="9" value="null"/>
+	</data>
+</record>
+
+<!-- ELEMENT MOD -->
+
+<record>
+	<data>
+		<property name="1" value="EM"/>
+		<property name="2" value="ELEMENTMOD_ID_1"/>
+		<property name="3" value="DATA"/>
+		<property name="4" value="ALERT"/>
+		<property name="5" value="Alert Message"/>
+		<property name="6" value="alert('hello world');"/>
+		<property name="7" value="ELEMENT_ID_1"/>
+		<property name="8" value="null"/>
+		<property name="9" value="null"/>
+	</data>
+</record>
+
+</records>
+
+</opendata>
