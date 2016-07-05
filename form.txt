@@ -1,147 +1,15 @@
-	window.buildElements = function(elementData, form) {
-			
-			for (var i = 0; i < elementData.length; i++) {
-				
-				var functionName = 'buildElement_' + elementData[i]['typeCode'];
-			
-				if (!!window[functionName]) {
-					window[functionName](elementData[i], form);
-				}
-			}
-		}
-		
-		window.buildAttributes = function(elementTypeCode, attributeData, element, form) {
-			
-			console.log(arguments);
-			
-			for (var i = 0; i < attributeData.length; i++) {
-				var functionName = 'buildAttribute_' + elementTypeCode + '_' + attributeData[i]['typeCode'];
-				
-				console.log(functionName);
-				
-				if (!!window[functionName]) {
-					window[functionName](attributeData[i], element, form);
-				}
-			}
-		}
-		
-
-element(data, form)
-
-element(data, element, form)
-
-
-====================
-FMODTYPE
-====================
-FMODTYPE_CD (PK)
-NAME
-BUILDER
-
-
-====================
-FORM
-====================
-FORM_ID (PK)
-ACTION
-METHOD
-
-
-====================
-FORM_FMOD
-====================
-FORM_FMOD_ID (PK)
-DATA
---------------------
-FORM_ID (FK)
-FMODTYPE_CD (FK)
-
-====================
-ELEMENTTYPE
-====================
-ELEMENTTYPE_CD (PK)
-NAME
-BUILDER
-
-
-====================
-MODTYPE
-====================
-MODTYPE_CD (PK)
-NAME
-BUILDER
---------------------
-ELEMENTTYPE_CD (FK)
-
-
-====================
-ELEMENT
-====================
-ELEMENT_ID (PK)
-NAME
---------------------
-ELEMENT_PARENT_ID (FK)
-ELEMENTTYPE_CD (FK)
-
-
-====================
-ELEMENT_MOD
-====================
-ELEMENT_MOD_ID (PK)
-DATA
---------------------
-ELEMENT_ID (FK)
-MODTYPE_CD (FK)
-
-
-
-
-form = {
-	
-	mods: [{
-		
-	}, {
-		
-	}]
-	
-	
-}
-
-
+FORM TABLES
 
 /*========================================*\
 | FORM                                     |
 |==========================================|
 | PK | FORM_ID                             |
-|    | NAME                                |
-|    | DESCRIPTION                         |
-|    | ACTON                               |
-|    | METHOD                              |
-\*========================================*/
-
-/*========================================*\
-| FORMMODTYPE                              |
-|==========================================|
-| PK | FORMMODTYPE_CD                      |
-|    | NAME                                |
-|    | CODE                                |
-\*========================================*/
-
-/*========================================*\
-| FORMMOD                                  |
-|==========================================|
-| PK | FORMMOD_ID                          |
-|    | DATA                                |
-| FK | FORM_ID                             |
-| FK | FORMMODTYPE_CD                      |
 \*========================================*/
 
 /*========================================*\
 | ELEMENTTYPE                              |
 |==========================================|
 | PK | ELEMENTTYPE_CD                      |
-|    | NAME                                |
-|    | ISCONTAINER                         |
 |    | CODE                                |
 \*========================================*/
 
@@ -149,76 +17,199 @@ form = {
 | ELEMENT                                  |
 |==========================================|
 | PK | ELEMENT_ID                          |
-|    | NAME                                |
+|    | ORDER                               |
 | FK | ELEMENTTYPE_CD                      |
+| FK | PARENTELEMENT_ID                    |
+| FK | FORM_ID                             |
 \*========================================*/
 
 /*========================================*\
-| ELEMENTMODTYPE                           |
+| ATTRIBUTE                                |
 |==========================================|
-| PK | ELEMENTMOD_CD                       |
+| PK | ATTRIBUTE_ID                        |
 |    | NAME                                |
-|    | CODE                                |
-| FK | ELEMENTTYPE_CD                      |
-\*========================================*/
-
-/*========================================*\
-| ELEMENTMOD                               |
-|==========================================|
-| PK | ELEMENTMOD_ID                       |
-|    | DATA                                |
+|    | VALUE                               |
+| FK | FORM_ID                             |
 | FK | ELEMENT_ID                          |
-| FK | ELEMENTMOD_CD                       |
 \*========================================*/
 
+/*========================================*\
+| MODIFIERTYPE                             |
+|==========================================|
+| PK | MODIFIERTYPE_CD                     |
+|    | CODE                                |
+\*========================================*/
 
+/*========================================*\
+| MODIFIER                                 |
+|==========================================|
+| PK | MODIFIER_ID                         |
+|    | PARAMETER                           |
+|    | ORDER                               |
+| FK | MODIFIERTYPE_CD                     |
+| FK | FORM_ID                             |
+| FK | ELEMENT_ID                          |
+\*========================================*/
 
-====================
-ELEMENTTYPE
-====================
-ELEMENTTYPE_CD (PK)
-NAME
-DESCRIPTION
-CODE
-IS_CONTAINER
+FORM QUERY
 
+-- PARAMETERS
 
-====================
-ATTRIBUTETYPE
-====================
-ATTRIBUTETYPE_CD (PK)
-NAME
-DESCRIPTION
+select
+	'PARAMETERS'      as 'PROP01',
+	${form_id}        as 'PROP02',
+	${placeholder_id} as 'PROP03',
+	null              as 'PROP04',
+	null              as 'PROP05',
+	null              as 'PROP06'
+from
+	DUAL
 
+-- FORM
 
-====================
-MODTYPE
-====================
-MODTYPE_CD (PK)
-NAME
-DESCRIPTION
-CODE
---------------------
-ELEMENTTYPE_CD (FK)
+union
 
+select
+	'FORM'  as 'PROP01',
+	FORM_ID as 'PROP02',
+	null    as 'PROP03',
+	null    as 'PROP04',
+	null    as 'PROP05',
+	null    as 'PROP06'
+from
+	FORM
+where
+	FORM_ID = ${form_id}
 
-====================
-ELEMENT
-====================
-ELEMENT_ID (PK)
-NAME
---------------------
-ELEMENT_PARENT_ID (FK)
-ELEMENTTYPE_CD (FK)
+-- UNIQUE ELEMENTTYPES
 
+union
 
-====================
-ELEMENT_MOD
-====================
-ELEMENT_MOD_ID (PK)
-DATA
---------------------
-ELEMENT_ID (FK)
-MODTYPE_CD (FK)
+select
+	'ELEMENTTYPES'    as 'PROP01',
+	T1.ELEMENTTYPE_CD as 'PROP02',
+	ELEMENTTYPE.CODE  as 'PROP03',
+	null              as 'PROP04',
+	null              as 'PROP05',
+	null              as 'PROP06'
+from
+	(
+	select
+		distinct ELEMENTTYPE.ELEMENTTYPE_CD as ELEMENTTYPE_CD
+	from
+		ELEMENTTYPE,
+		ELEMENT
+	where
+		ELEMENTTYPE.ELEMENTTYPE_CD = ELEMENT.ELEMENTTYPE_CD
+		ELEMENT.FORM_ID = ${form_id}
+	) T1,
+	ELEMENTTYPE
+where
+	T1.ELEMENTTYPE_CD = ELEMENTTYPE.ELEMENTTYPE_CD
+	
+-- ELEMENTS
 
+union
 
+select
+	'ELEMENTS'       as 'PROP01',
+	ELEMENT_ID       as 'PROP02',
+	PARENTELEMENT_ID as 'PROP03',
+	ELEMENTTYPE_CD   as 'PROP04',
+	FORM_ID          as 'PROP05',
+	null             as 'PROP06'
+from
+	ELEMENT
+where
+	FORM_ID = ${form_id}
+order by
+	ORDER
+
+-- ATTRIBUTES
+
+union
+
+select
+	'ATTRIBUTES'           as 'PROP01',
+	ATTRIBUTE.ATTRIBUTE_ID as 'PROP02',
+	ATTRIBUTE.NAME         as 'PROP03',
+	ATTRIBUTE.VALUE        as 'PROP04',
+	ATTRIBUTE.FORM_ID      as 'PROP05',
+	ATTRIBUTE.ELEMENT_ID   as 'PROP06'
+from
+	ATTRIBUTE,
+	ELEMENT
+where
+	(
+		ATTRIBUTE.FORM_ID is not null
+		and ATTRIBUTE.ELEMENT_ID is null
+		and ATTRIBUTE.FORM_ID = ${form_id}
+	) or (
+		ATTRIBUTE.FORM_ID is null
+		and ATTRIBUTE.ELEMENT_ID is not null
+		and ATTRIBUTE.ELEMENT_ID = ELEMENT.ELEMENT_ID
+		and ELEMENT.FORM_ID = ${form_id}
+	)
+	
+-- MODIFIERTYPES
+
+union
+
+select
+	'MODIFIERTYPES'    as 'PROP01',
+	T2.MODIFIERTYPE_CD as 'PROP02',
+	MODIFIERTYPE.CODE  as 'PROP03',
+	null               as 'PROP04',
+	null               as 'PROP05',
+	null               as 'PROP06'
+from
+	(
+	select
+		distinct MODIFIERTYPE.MODIFIERTYPE_CD as MODIFIERTYPE_CD
+	from
+		MODIFIERTYPE,
+		MODIFIER,
+		ELEMENT
+	where
+		(
+			MODIFIER.FORM_ID is not null
+			and MODIFIER.ELEMENT_ID is null
+			and MODIFIER.FORM_ID = ${form_id}
+		) or (
+			MODIFIER.FORM_ID is null
+			and MODIFIER.ELEMENT_ID is not null
+			and MODIFIER.ELEMENT_ID = ELEMENT.ELEMENT_ID
+			and ELEMENT.FORM_ID = ${form_id}
+		)
+	) T2,
+	MODIFIERTYPE
+where
+	T2.MODIFIERTYPE_CD = MODIFIERTYPE.MODIFIERTYPE_CD
+
+-- MODIFIERS
+
+union
+
+select
+	'MODIFIERS'              as 'PROP01',
+	MODIFIER.MODIFIER_ID     as 'PROP02',
+	MODIFIER.PARAMETER       as 'PROP03',
+	MODIFIER.MODIFIERTYPE_CD as 'PROP04',
+	null                     as 'PROP05',
+	null                     as 'PROP06'
+from
+	MODIFIER,
+	ELEMENT
+where
+	(
+		MODIFIER.FORM_ID is not null
+		and MODIFIER.ELEMENT_ID is null
+		and MODIFIER.FORM_ID = ${form_id}
+	) or (
+		MODIFIER.FORM_ID is null
+		and MODIFIER.ELEMENT_ID is not null
+		and MODIFIER.ELEMENT_ID = ELEMENT.ELEMENT_ID
+		and ELEMENT.FORM_ID = ${form_id}
+	)
+order by
+	ORDER

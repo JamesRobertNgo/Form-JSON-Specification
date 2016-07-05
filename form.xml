@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<opendata ver="1.0">
+
+<records>
+
+<!-- PARAMETERS -->
+
+<record>
+	<data>
+		<property name="1" value="PARAMETERS"/>
+		<property name="2" value="FORM_ID_1"/>
+		<property name="3" value="PLACEHOLDER_ID"/>
+		<property name="4" value="null"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<!-- FORM -->
+
+<record>
+	<data>
+		<property name="1" value="FORM"/>
+		<property name="2" value="FORM_ID_1"/>
+		<property name="3" value="null"/>
+		<property name="4" value="null"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<!-- ELEMENTTYPES -->
+
+<record>
+	<data>
+		<property name="1" value="ELEMENTTYPES"/>
+		<property name="2" value="TEXT"/>
+		<property name="3" value="
+			var data = arguments[0];
+			var parent = arguments[1];
+			var form = arguments[2];
+			var p = document.createElement('p');
+			p.setAttribute('id', data.typeCd + '_' + data.id + '_wrapper');
+			var label = document.createElement('label');
+			label.setAttribute('for', data.id);
+			p.appendChild(label);
+			var input = document.createElement('input');
+			input.setAttribute('id', data.id);
+			input.setAttribute('type', 'text');
+			p.appendChild(input);
+			parent.appendChild(p);
+			return {
+				element: p,
+				formItem: input
+			};
+		"/>
+		<property name="4" value="null"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="ELEMENTTYPES"/>
+		<property name="2" value="SELECT"/>
+		<property name="3" value="
+			var data = arguments[0];
+			var parent = arguments[1];
+			var form = arguments[2];
+			var p = document.createElement('p');
+			p.setAttribute('id', data.typeCd + '_' + data.id + '_wrapper');
+			var label = document.createElement('label');
+			label.setAttribute('for', data.id);
+			p.appendChild(label);
+			var select = document.createElement('select');
+			select.setAttribute('id', data.id);
+			p.appendChild(select);
+			parent.appendChild(p);
+			return {
+				element: p,
+				formItem: select
+			};
+		"/>
+		<property name="4" value="null"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="ELEMENTTYPES"/>
+		<property name="2" value="OPTION"/>
+		<property name="3" value="
+			var data = arguments[0];
+			var parent = arguments[1];
+			var form = arguments[2];
+			var option = document.createElement('option');
+			parent.appendChild(option);
+			return {
+				element: option,
+				formItem: option
+			};
+		"/>
+		<property name="4" value="null"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<!-- ELEMENTS -->
+
+<record>
+	<data>
+		<property name="1" value="ELEMENTS"/>
+		<property name="2" value="ELEMENT_ID_1"/>
+		<property name="3" value="null"/>
+		<property name="4" value="TEXT"/>
+		<property name="5" value="FORM_ID_1"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="ELEMENTS"/>
+		<property name="2" value="ELEMENT_ID_2"/>
+		<property name="3" value="null"/>
+		<property name="4" value="SELECT"/>
+		<property name="5" value="FORM_ID_1"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="ELEMENTS"/>
+		<property name="2" value="ELEMENT_ID_3"/>
+		<property name="3" value="ELEMENT_ID_2"/>
+		<property name="4" value="OPTION"/>
+		<property name="5" value="FORM_ID_1"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<!-- ATTRIBUTES -->
+
+</records>
+
+</opendata>

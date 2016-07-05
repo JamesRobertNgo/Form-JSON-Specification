@@ -1,126 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-	<xsl:output method="xml"/>
+	<xsl:output method="text" omit-xml-declaration="yes"/>
 	
 	<!-- ==================== -->
 	<!-- NAMED TEMPLATES      -->
 	<!-- ==================== -->
 	
-	<xsl:variable name="validCharacters_apos" select='"&apos;"' />
-	<xsl:variable name="validCharacters" select="concat($validCharacters_apos, ' !&quot;#$%&amp;()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~&#xA0;¡¢£¤¥¦§¨©ª«¬&#xAD;®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ€‚ƒ„…†‡ˆ‰Š‹ŒŽ‘’“”•–—˜™š›œžŸ')" />
-	
-	<!-- SANITIZER -->
-	<xsl:template name="sanitizer">
-		<xsl:param name="value" select="''" />
-		<xsl:param name="invalid" select="''" />
-		<xsl:param name="indicator" select="''" />
+	<!-- JS ESCAPE TEMPLATE -->
+	<xsl:template name="js-escape">
+		<xsl:param name="text"/>
 		
-		<xsl:if test="string-length($value) > 0 ">
-			<xsl:choose>
-				<xsl:when test="contains($invalid,substring($value,1,1))">
-					<xsl:value-of select="$indicator"/>
-				</xsl:when>
-				
-				<xsl:otherwise>
-					<xsl:value-of select="substring($value,1,1)"/>
-				</xsl:otherwise>
-			</xsl:choose>
+		<xsl:if test="string-length($text) > 0">
+			<xsl:value-of select="substring-before(concat($text, '&quot;'), '&quot;')"/>
 			
-			<xsl:call-template name="sanitizer">
-				<xsl:with-param name="value" select="substring($value,2,string-length($value)-1)"/>
-				<xsl:with-param name="invalid" select="$invalid"/>
-				<xsl:with-param name="indicator" select="$indicator"/>
-			</xsl:call-template>
+			<xsl:if test="contains($text, '&quot;')">
+				<xsl:text>\&quot;</xsl:text>
+
+				<xsl:call-template name="js-escape">
+					<xsl:with-param name="text" select="substring-after($text, '&quot;')"/>
+				</xsl:call-template>
+			</xsl:if>
 		</xsl:if>
 	</xsl:template>
 	
-	<!-- SANITIZE -->
-	<xsl:template name="sanitize">
-		<xsl:param name="value" />
-		<xsl:param name="indicator" select="''" />
+	<!-- JS STRING TEMPLATE -->
+	<xsl:template name="js-string">
+		<xsl:param name="text"/>
 		
-		<xsl:variable name="normvalue" select="normalize-space($value)" />
-		<xsl:variable name="invalid" select="translate($normvalue, $validCharacters, '')" />
-	
-		<xsl:choose>
-			<xsl:when test="string-length($invalid) > 0 ">
-				<xsl:call-template name="sanitizer">
-					<xsl:with-param name="value" select="$normvalue"/>
-					<xsl:with-param name="invalid" select="$invalid"/>
-					<xsl:with-param name="indicator" select="$indicator"/>
-				</xsl:call-template>
-			</xsl:when>
-	
-			<xsl:otherwise>
-				<xsl:value-of select="$normvalue"/>
-			</xsl:otherwise>
-		</xsl:choose>
+		<xsl:text>&quot;</xsl:text>
+		
+		<xsl:call-template name="js-escape">
+			<xsl:with-param name="text" select="normalize-space($text)" />
+		</xsl:call-template>
+		
+		<xsl:text>&quot;</xsl:text>
 	</xsl:template>
-	
-	<!-- ==================== -->
-	<!-- NAMED KEY            -->
-	<!-- ==================== -->
-	
-	<xsl:key name="DATABY_ID" match="//data" use="property[@name='1']/@value"/>
 	
 	<!-- ==================== -->
 	<!-- MATCHED TEMPLATES    -->
 	<!-- ==================== -->
 	
 	<!-- MATCH ROOT -->
-	
 	<xsl:template match="/">
+		<xsl:text>(function(){ </xsl:text>
 		
-		<xsl:element name="root_element">
-			
-			<xsl:apply-templates select="//data[property[@name='3']/@value = 'null']"/>
-			
-		</xsl:element>
+		<xsl:apply-templates select="//data[property[@name='1']/@value='PARAMETERS']"/>
 		
+		<xsl:apply-templates select="//data[property[@name='1']/@value='FORM']"/>
+		
+		<xsl:text> })();</xsl:text>
 	</xsl:template>
 	
-	
-	<!-- MATCH DATA -->
-	
-	<xsl:template match="//data">
-		
-		<xsl:variable name="ID" select="property[@name='1']/@value"/>
-		
-		<xsl:if test="count(. | key('DATABY_ID', $ID)[1]) = 1">
-			
-			<xsl:variable name="PARENTID" select="property[@name='1']/@value"/>
-			
-			<xsl:element name="element">
-				
-				<xsl:attribute name="id">
-					<xsl:value-of select="property[@name=$ID]/@value"/>
-				</xsl:attribute>
-				
-				<xsl:attribute name="type">
-					<xsl:value-of select="property[@name='2']/@value"/>
-				</xsl:attribute>
-				
-				<!-- MODS BEGINS -->
-				<xsl:element name="mods">
-					<xsl:for-each select="key('DATABY_ID', $ID)">
-						<xsl:element name="mod">
-							<xsl:value-of select="property[@name='4']/@value"/>
-						</xsl:element>
-					</xsl:for-each>
-				</xsl:element>
-				<!-- END OF MODS -->
-				
-				<!-- ELEMENTS BEGIN -->
-				<xsl:element name="elements">
-					<xsl:apply-templates select="//data[property[@name='3']/@value = $PARENTID]"/>
-				</xsl:element>
-				<!-- END OF ELEMENTS -->
-				
-			</xsl:element>
-			
-		</xsl:if>
-		
+	<!-- MATCH PARAMETER DATA -->
+	<xsl:template match="//data[property[@name='1']/@value='PARAMETERS']">
+		<xsl:text>var placeholder = document.getElementById(</xsl:text>
+		<xsl:choose>
+			<xsl:when test="property[@name='3']/@value != 'null'">
+				<xsl:call-template name="js-string">
+					<xsl:with-param name="text" select="property[@name='3']/@value"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:text>null</xsl:text>
+			</xsl:otherwise>
+		</xsl:choose>
+		<xsl:text>); </xsl:text>
 	</xsl:template>
 	
+	<!-- MATCH FORM DATA -->
+	<xsl:template match="//data[property[@name='1']/@value='FORM']">
+		<xsl:text>var form = document.createElement("form"); </xsl:text>
+		
+		<xsl:choose>
+			<xsl:when test="property[@name='2']/@value != 'null'">
+				<xsl:text>form.setAttribute("id", </xsl:text>
+				<xsl:call-template name="js-string">
+					<xsl:with-param name="text" select="concat('form_', property[@name='2']/@value)"/>
+				</xsl:call-template>
+				<xsl:text>); </xsl:text>
+			</xsl:when>
+		</xsl:choose>
+		
+		<xsl:text>placeholder.appendChild(form); </xsl:text>
+		
+		<xsl:apply-templates select="//data[property[@name='1']/@value='ELEMENTTYPES']"/>
+		
+		<xsl:apply-templates select="//data[property[@name='1']/@value='ELEMENTS' and property[@name='3']/@value='null']"/>
+	</xsl:template>
+	
+	<!-- MATCH ELEMENT TYPES DATA -->
+	<xsl:template match="//data[property[@name='1']/@value='ELEMENTTYPES']">
+		<xsl:text>function element_</xsl:text>
+		<xsl:value-of select="property[@name='2']/@value"/>
+		<xsl:text>(data, parent, form) {</xsl:text>
+		<xsl:value-of select="normalize-space(property[@name='3']/@value)"/>
+		<xsl:text>};</xsl:text>
+	</xsl:template>
+	
+	<!-- MATCH ELEMENTS DATA -->
+	<xsl:template match="//data[property[@name='1']/@value='ELEMENTS']">
+		<xsl:text>(function(parent, form) { </xsl:text>
+		
+		<xsl:text>var data = {</xsl:text>
+		
+		<xsl:text>"id": </xsl:text>
+		<xsl:choose>
+			<xsl:when test="property[@name='2']/@value != 'null'">
+				<xsl:call-template name="js-string">
+					<xsl:with-param name="text" select="property[@name='2']/@value"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:text>null</xsl:text>
+			</xsl:otherwise>
+		</xsl:choose>
+		
+		<xsl:text>, </xsl:text>
+		
+		<xsl:text>"typeCd": </xsl:text>
+		<xsl:choose>
+			<xsl:when test="property[@name='4']/@value != 'null'">
+				<xsl:call-template name="js-string">
+					<xsl:with-param name="text" select="property[@name='4']/@value"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:text>null</xsl:text>
+			</xsl:otherwise>
+		</xsl:choose>
+				
+		<xsl:text>}; </xsl:text>
+		
+		<xsl:text>var references = element_</xsl:text>
+		<xsl:value-of select="property[@name='4']/@value"/>
+		<xsl:text>(data, parent, form); </xsl:text>
+		
+		<xsl:text>var parent = references.formItem; </xsl:text>
+		
+		<xsl:variable name="ID" select="property[@name='2']/@value"/>
+		<xsl:apply-templates select="//data[property[@name='1']/@value='ELEMENTS' and property[@name='3']/@value=$ID]"/>
+		
+		<xsl:text>})</xsl:text>
+		
+		<xsl:text>(</xsl:text>
+		<xsl:choose>
+			<xsl:when test="property[@name='3']/@value != 'null'">
+				<xsl:text>parent</xsl:text>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:text>form</xsl:text>
+			</xsl:otherwise>
+		</xsl:choose>
+		<xsl:text>, form); </xsl:text>
+	</xsl:template>
 </xsl:stylesheet>
