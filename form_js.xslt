@@ -43,7 +43,7 @@
 	
 	<!-- MATCH ROOT -->
 	<xsl:template match="/">
-		<xsl:text>(function buildForm(){ </xsl:text>
+		<xsl:text>(function(){ </xsl:text>
 		
 		<xsl:apply-templates select="//data[property[@name='1']/@value='P']"/>
 		
@@ -56,7 +56,6 @@
 	<xsl:template match="//data[property[@name='1']/@value='P']">
 		
 		<!-- PLACEHOLDER VARIABLE -->
-		
 		<xsl:text>var placeholder = document.getElementById(</xsl:text>
 		<xsl:choose>
 			<xsl:when test="property[@name='3']/@value != 'null'">
@@ -74,93 +73,77 @@
 	<!-- MATCH FORM DATA -->
 	<xsl:template match="//data[property[@name='1']/@value='F']">
 		
-		<!-- FORM BUILDER -->
+		<!-- FORM -->
+		<xsl:text>var form = document.createElement("form"); </xsl:text>
 		
-		<xsl:text>var form = document.createElement('form'); </xsl:text>
-		
-		<xsl:text>form.setAttribute('id', 'form_' + </xsl:text>
+		<!-- FORM ID -->
 		<xsl:choose>
 			<xsl:when test="property[@name='2']/@value != 'null'">
+				<xsl:text>form.setAttribute("id", </xsl:text>
 				<xsl:call-template name="js-string">
-					<xsl:with-param name="text" select="property[@name='2']/@value"/>
+					<xsl:with-param name="text" select="concat('form_', property[@name='2']/@value)"/>
 				</xsl:call-template>
+				<xsl:text>); </xsl:text>
 			</xsl:when>
-			<xsl:otherwise>
-				<xsl:text>null</xsl:text>
-			</xsl:otherwise>
 		</xsl:choose>
-		<xsl:text>); </xsl:text>
 		
-		<xsl:text>form.setAttribute('action', </xsl:text>
+		<!-- FORM ACTION -->
 		<xsl:choose>
-			<xsl:when test="property[@name='5']/@value != 'null'">
+			<xsl:when test="property[@name='3']/@value != 'null'">
+				<xsl:text>form.setAttribute("action", </xsl:text>
 				<xsl:call-template name="js-string">
-					<xsl:with-param name="text" select="property[@name='5']/@value"/>
+					<xsl:with-param name="text" select="property[@name='3']/@value"/>
 				</xsl:call-template>
+				<xsl:text>); </xsl:text>
 			</xsl:when>
-			<xsl:otherwise>
-				<xsl:text>null</xsl:text>
-			</xsl:otherwise>
 		</xsl:choose>
-		<xsl:text>); </xsl:text>
 		
-		<xsl:text>form.setAttribute('method', </xsl:text>
+		<!-- FORM METHOD -->
 		<xsl:choose>
-			<xsl:when test="property[@name='6']/@value != 'null'">
+			<xsl:when test="property[@name='4']/@value != 'null'">
+				<xsl:text>form.setAttribute("method", </xsl:text>
 				<xsl:call-template name="js-string">
-					<xsl:with-param name="text" select="property[@name='6']/@value"/>
+					<xsl:with-param name="text" select="property[@name='4']/@value"/>
 				</xsl:call-template>
+				<xsl:text>); </xsl:text>
 			</xsl:when>
-			<xsl:otherwise>
-				<xsl:text>null</xsl:text>
-			</xsl:otherwise>
 		</xsl:choose>
-		<xsl:text>); </xsl:text>
 		
 		<!-- APPLY FORM ATTRIBUTES -->
-		
 		<xsl:apply-templates select="//data[property[@name='1']/@value='FA']"/>
 		
 		<!-- APPLY FORM MODS -->
-		
 		<xsl:apply-templates select="//data[property[@name='1']/@value='FM']"/>
 		
-		<!-- APPLY ELEMENTS -->
-		
+		<!-- APPLY FORM ELEMENTS -->
 		<xsl:apply-templates select="//data[property[@name='1']/@value='E' and property[@name='5']/@value='null']"/>
 		
-		<!-- ADD STANDARD FORM BUTTONS -->
+		<!-- FORM BUTTONS -->
+		<xsl:text>var p = document.createElement("p"); </xsl:text>
 		
-		<xsl:text>(function (form) { </xsl:text>
-		
-		<xsl:text>var p = document.createElement('p'); </xsl:text>
-		<xsl:text>p.setAttribute('id', 'form_' + </xsl:text>
 		<xsl:choose>
 			<xsl:when test="property[@name='2']/@value != 'null'">
+				<xsl:text>p.setAttribute("id", </xsl:text>
 				<xsl:call-template name="js-string">
-					<xsl:with-param name="text" select="property[@name='2']/@value"/>
+					<xsl:with-param name="text" select="concat('form_', property[@name='2']/@value, '_buttons')"/>
 				</xsl:call-template>
+				<xsl:text>); </xsl:text>
 			</xsl:when>
-			<xsl:otherwise>
-				<xsl:text>null</xsl:text>
-			</xsl:otherwise>
 		</xsl:choose>
-		<xsl:text> + '_buttons'); </xsl:text>
 		
-		<xsl:text>var submit = document.createElement('input'); </xsl:text>
-		<xsl:text>submit.setAttribute('type', 'submit'); </xsl:text>
+		<xsl:text>var submit = document.createElement("input"); </xsl:text>
+		<xsl:text>submit.setAttribute("type", "submit"); </xsl:text>
+		
 		<xsl:text>p.appendChild(submit); </xsl:text>
 		
-		<xsl:text>var reset = document.createElement('input'); </xsl:text>
-		<xsl:text>reset.setAttribute('type', 'reset'); </xsl:text>
+		<xsl:text>var reset = document.createElement("input"); </xsl:text>
+		<xsl:text>reset.setAttribute("type", "reset"); </xsl:text>
+		
 		<xsl:text>p.appendChild(reset); </xsl:text>
 		
 		<xsl:text>form.appendChild(p); </xsl:text>
 		
-		<xsl:text>})(form); </xsl:text>
-		
 		<!-- INSERT FORM INTO PLACEHOLDER -->
-		
 		<xsl:text>placeholder.appendChild(form); </xsl:text>
 	</xsl:template>
 	
@@ -194,7 +177,7 @@
 	<!-- MATCH FORM MOD DATA -->
 	<xsl:template match="//data[property[@name='1']/@value='FM']">
 		<xsl:choose>
-			<xsl:when test="property[@name='6']/@value != 'null'">
+			<xsl:when test="property[@name='5']/@value != 'null'">
 				<xsl:text>(function(form) { </xsl:text>
 				
 				<xsl:text>var data = { </xsl:text>
@@ -227,7 +210,7 @@
 				
 				<xsl:text>, </xsl:text>
 				
-				<xsl:text>"typeCode": </xsl:text>
+				<xsl:text>"modTypeCd": </xsl:text>
 				<xsl:choose>
 					<xsl:when test="property[@name='4']/@value != 'null'">
 						<xsl:call-template name="js-string">
@@ -242,7 +225,7 @@
 				<xsl:text>}; </xsl:text>
 				
 				<xsl:text>var code = function(data, form) { </xsl:text>
-				<xsl:value-of select="normalize-space(property[@name='6']/@value)"/>
+				<xsl:value-of select="normalize-space(property[@name='5']/@value)"/>
 				<xsl:text>}; </xsl:text>
 				
 				<xsl:text>code(data, form); </xsl:text>

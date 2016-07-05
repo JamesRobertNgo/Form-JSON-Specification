@@ -26,10 +26,10 @@
 	<data>
 		<property name="1" value="F"/>
 		<property name="2" value="FORM_ID_1"/>
-		<property name="3" value="NAME"/>
-		<property name="4" value="DESCRIPTION"/>
-		<property name="5" value="ACTON"/>
-		<property name="6" value="METHOD"/>
+		<property name="3" value="http://www.toronto.ca/"/>
+		<property name="4" value="get"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
 		<property name="7" value="null"/>
 		<property name="8" value="null"/>
 		<property name="9" value="null"/>
@@ -43,7 +43,7 @@
 		<property name="1" value="FA"/>
 		<property name="2" value="FORMATTRIBUTE_ID_1"/>
 		<property name="3" value="required"/>
-		<property name="4" value="required"/>
+		<property name="4" value=""/>
 		<property name="5" value="null"/>
 		<property name="6" value="null"/>
 		<property name="7" value="null"/>
@@ -86,17 +86,40 @@
 	<data>
 		<property name="1" value="FM"/>
 		<property name="2" value="FORMMOD_ID_1"/>
-		<property name="3" value="&lt;h1&gt;My Form&lt;/h1&gt;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tempus lorem tempus risus semper rhoncus. Donec id vulputate nibh. Cras fringilla arcu erat, eget tristique metus laoreet vitae. Cras auctor, purus sit amet laoreet lobortis, urna tellus consequat lectus, et bibendum nunc nisi at dolor. Nam et tristique eros. Maecenas ut eleifend est, eget malesuada metus. Maecenas semper hendrerit tristique. Donec eget luctus arcu. Etiam sed enim laoreet nisi gravida tempus vestibulum nec ligula. Aenean vulputate dapibus sapien eget consequat. Ut tristique semper enim eget elementum. Sed sagittis purus suscipit elit volutpat porta. Nulla tincidunt egestas velit. Phasellus bibendum congue rhoncus. Phasellus feugiat enim eget dignissim tincidunt. Interdum et malesuada fames ac ante ipsum primis in faucibus.&lt;/p&gt;"/>
-		<property name="4" value="HTML"/>
-		<property name="5" value="HTML Content"/>
-		<property name="6" value="
+		<property name="3" value="#ffb7b7"/>
+		<property name="4" value="HIGHLIGHT"/>
+		<property name="5" value="
 			var data = arguments[0];
 			var form = arguments[1];
-			var div = document.createElement('div');
-			div.setAttribute('id', data.typeCode + '_' + data.id);
-			div.innerHTML = data.data;
-			form.appendChild(div);
+			form.onmouseover = function(e) {
+				this.style.backgroundColor = data.data;
+			};
+			form.onmouseout = function(e) {
+				this.style.backgroundColor = 'transparent';
+			};
 		"/>
+		<property name="6" value="null"/>
+		<property name="7" value="null"/>
+		<property name="8" value="null"/>
+		<property name="9" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="FM"/>
+		<property name="2" value="FORMMOD_ID_2"/>
+		<property name="3" value="Submitted"/>
+		<property name="4" value="SUBMITALERT"/>
+		<property name="5" value="
+			var data = arguments[0];
+			var form = arguments[1];
+			form.onsubmit = function(e) {
+				alert(data.data);
+				return false;
+			};
+		"/>
+		<property name="6" value="null"/>
 		<property name="7" value="null"/>
 		<property name="8" value="null"/>
 		<property name="9" value="null"/>

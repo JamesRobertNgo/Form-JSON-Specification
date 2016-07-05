@@ -3,8 +3,6 @@
 | FORM                                     |
 |==========================================|
 | PK | FORM_ID                             |
-|    | NAME                                |
-|    | DESCRIPTION                         |
 |    | ACTON                               |
 |    | METHOD                              |
 \*========================================*/
@@ -12,10 +10,10 @@
 select
 	'F'                           as 'COL_01',
 	CAST(FORM_ID as VARCHAR2)     as 'COL_02',
-	CAST(NAME as VARCHAR2)        as 'COL_03',
-	CAST(DESCRIPTION as VARCHAR2) as 'COL_04',
-	CAST(ACTON as VARCHAR2)       as 'COL_05',
-	CAST(METHOD as VARCHAR2)      as 'COL_06',
+	CAST(ACTON as VARCHAR2)       as 'COL_03',
+	CAST(METHOD as VARCHAR2)      as 'COL_04',
+	null                          as 'COL_05',
+	null                          as 'COL_06',
 	null                          as 'COL_07',
 	null                          as 'COL_08',
 	null                          as 'COL_09'
@@ -56,8 +54,7 @@ union
 | FORMMODTYPE                              |
 |==========================================|
 | PK | FORMMODTYPE_CD                      |
-|    | NAME                                |
-|    | CODE                                |
+|    | MODCODE                             |
 \*========================================*/
 
 /*========================================*\
@@ -75,8 +72,8 @@ select
 	CAST(FORMMOD.FORMMOD_ID as VARCHAR2)         as 'COL_02',
 	CAST(FORMMOD.DATA as VARCHAR2)               as 'COL_03',
 	CAST(FORMMODTYPE.FORMMODTYPE_CD as VARCHAR2) as 'COL_04',
-	CAST(FORMMODTYPE.NAME as VARCHAR2)           as 'COL_05',
-	CAST(FORMMODTYPE.CODE as VARCHAR2)           as 'COL_06',
+	CAST(FORMMODTYPE.MODCODE as VARCHAR2)        as 'COL_05',
+	null                                         as 'COL_06',
 	null                                         as 'COL_07',
 	null                                         as 'COL_08',
 	null                                         as 'COL_09'
