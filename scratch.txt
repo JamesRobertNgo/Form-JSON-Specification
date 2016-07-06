@@ -1,6 +1,8 @@
 xsltproc form_js.xslt form_source.xml > form.js
 
+xsltproc form.xslt form.xml > form_new.js
 
+xsltproc form2.xslt form2.xml > form2.js
 
 
 <?xml version="1.0" encoding="UTF-8"?>

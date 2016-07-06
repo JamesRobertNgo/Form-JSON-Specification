@@ -51,8 +51,8 @@
 			p.appendChild(input);
 			parent.appendChild(p);
 			return {
-				element: p,
-				formItem: input
+				attributable: input
+				containable: p
 			};
 		"/>
 		<property name="4" value="null"/>
@@ -79,8 +79,8 @@
 			p.appendChild(select);
 			parent.appendChild(p);
 			return {
-				element: p,
-				formItem: select
+				attributable: select
+				containable: p
 			};
 		"/>
 		<property name="4" value="null"/>
@@ -100,8 +100,34 @@
 			var option = document.createElement('option');
 			parent.appendChild(option);
 			return {
-				element: option,
-				formItem: option
+				attributable: option
+				containable: option
+			};
+		"/>
+		<property name="4" value="null"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="ELEMENTTYPES"/>
+		<property name="2" value="RESETSUBMIT"/>
+		<property name="3" value="
+			var data = arguments[0];
+			var parent = arguments[1];
+			var form = arguments[2];
+			var p = document.createElement('p');
+			p.setAttribute('id', data.typeCd + '_' + data.id + '_wrapper');
+			var reset = document.createElement('input');
+			reset.setAttribute('type', 'reset');
+			p.appendChild(reset);
+			var submit = document.createElement('input');
+			submit.setAttribute('type', 'submit');
+			p.appendChild(submit);
+			parent.appendChild(p);
+			return {
 			};
 		"/>
 		<property name="4" value="null"/>
@@ -145,7 +171,51 @@
 	</data>
 </record>
 
+<record>
+	<data>
+		<property name="1" value="ELEMENTS"/>
+		<property name="2" value="ELEMENT_ID_4"/>
+		<property name="3" value="null"/>
+		<property name="4" value="RESETSUBMIT"/>
+		<property name="5" value="FORM_ID_1"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
 <!-- ATTRIBUTES -->
+
+<record>
+	<data>
+		<property name="1" value="ATTRIBUTES"/>
+		<property name="2" value="ATTRIBUTE_ID_1"/>
+		<property name="3" value="method"/>
+		<property name="4" value="get"/>
+		<property name="5" value="FORM_ID_1"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="ATTRIBUTES"/>
+		<property name="2" value="ATTRIBUTE_ID_2"/>
+		<property name="3" value="action"/>
+		<property name="4" value="http://www.toronto.ca/"/>
+		<property name="5" value="FORM_ID_1"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="ATTRIBUTES"/>
+		<property name="2" value="ATTRIBUTE_ID_3"/>
+		<property name="3" value="class"/>
+		<property name="4" value="sampleClass, sampleClass2"/>
+		<property name="5" value="FORM_ID_1"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
 
 </records>
 
