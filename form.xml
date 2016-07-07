@@ -4,11 +4,216 @@
 
 <records>
 
-<!-- PARAMETERS -->
+
+<!-- ==================== -->
+<!-- ELEMENTTYPE          -->
+<!-- ==================== -->
 
 <record>
 	<data>
-		<property name="1" value="PARAMETERS"/>
+		<property name="1" value="ELEMENTTYPE"/>
+		<property name="2" value="HTMLCONTENT"/>
+		<property name="3" value="
+			var data = arguments[0];
+			var parent = arguments[1];
+			var form = arguments[2];
+			
+			
+			var div = document.createElement('div');
+			div.innerHTML = data.label;
+			if (!!parent) {
+				parent.appendChild(div);
+			};
+			
+			
+			return {
+				element: div,
+				parent: div
+			};
+		"/>
+		<property name="4" value="null"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="ELEMENTTYPE"/>
+		<property name="2" value="TEXTINPUT"/>
+		<property name="3" value="
+			var data = arguments[0];
+			var parent = arguments[1];
+			var form = arguments[2];
+			
+			
+			var p = document.createElement('p');
+			p.setAttribute('id', data.typeCd + '_' + data.id + '_wrapper');
+			p.setAttribute('class', data.typeCd);
+			
+			var label = document.createElement('label');
+			label.innerHTML = data.label;
+			label.setAttribute('for', data.id);
+			label.setAttribute('id', data.id);
+			
+			p.appendChild(label);
+			
+			var input = document.createElement('input');
+			input.setAttribute('id', data.typeCd + '_' + data.id + '_label');
+			input.setAttribute('name', data.name);
+			
+			p.appendChild(input);
+			
+			if (!!parent) {
+				parent.appendChild(p);
+			};
+			
+			
+			return {
+				element: p,
+				parent: null
+			};
+		"/>
+		<property name="4" value="null"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="ELEMENTTYPE"/>
+		<property name="2" value="SELECTINPUT"/>
+		<property name="3" value="
+			var data = arguments[0];
+			var parent = arguments[1];
+			var form = arguments[2];
+			
+			var p = document.createElement('p');
+			p.setAttribute('id', data.typeCd + '_' + data.id + '_wrapper');
+			var label = document.createElement('label');
+			label.innerHTML = data.label;
+			label.setAttribute('for', data.id);
+			p.appendChild(label);
+			
+			var select = document.createElement('select');
+			select.setAttribute('id', data.typeCd + '_' + data.id);
+			select.setAttribute('name', data.name);
+			p.appendChild(select);
+			
+			form.onsubmit = function() {
+				if (select.value == null) {
+					return false;
+				}
+			}
+			
+			if (!!parent) {
+				parent.appendChild(p);
+			};
+			
+			return {
+				element: p,
+				parent: select
+			};
+		"/>
+		<property name="4" value="null"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="ELEMENTTYPE"/>
+		<property name="2" value="OPTION"/>
+		<property name="3" value="
+			var data = arguments[0];
+			var parent = arguments[1];
+			var form = arguments[2];
+			var option = document.createElement('option');
+			option.setAttribute('id', data.typeCd + '_' + data.id);
+			option.setAttribute('value', data.name);
+			option.innerHTML = data.label;
+			if (!!parent) {
+				parent.appendChild(option);
+			};
+			return {
+				element: option,
+				parent: null
+			};
+		"/>
+		<property name="4" value="null"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+
+<!-- ==================== -->
+<!-- MODIFIERTYPE         -->
+<!-- ==================== -->
+
+<!-- FORM -->
+
+<record>
+	<data>
+		<property name="1" value="MODIFIERTYPE"/>
+		<property name="2" value="FORM_CLASS"/>
+		<property name="3" value="
+			var data = arguments[0];
+			var element = arguments[1];
+			var form = arguments[2];
+			element.setAttribute('class', data.value);
+		"/>
+		<property name="4" value="null"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<!-- TEXTINPUT -->
+
+<record>
+	<data>
+		<property name="1" value="MODIFIERTYPE"/>
+		<property name="2" value="TEXTINPUT_REQUIRED"/>
+		<property name="3" value="
+			var data = arguments[0];
+			var element = arguments[1];
+			var form = arguments[2];
+			(element.getElementsByTagName('input')[0]).setAttribute('required','');
+		"/>
+		<property name="4" value="null"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="MODIFIERTYPE"/>
+		<property name="2" value="TEXTINPUT_CLASS"/>
+		<property name="3" value="
+			var data = arguments[0];
+			var element = arguments[1];
+			var form = arguments[2];
+			console.log(data, element, form, element.getElementsByTagName('input')[0]);
+			element.setAttribute('class',data.value);
+		"/>
+		<property name="4" value="null"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+
+<!-- ==================== -->
+<!-- PARAMETERS           -->
+<!-- ==================== -->
+
+<record>
+	<data>
+		<property name="1" value="PARAMETER"/>
 		<property name="2" value="FORM_ID_1"/>
 		<property name="3" value="PLACEHOLDER_ID"/>
 		<property name="4" value="null"/>
@@ -17,205 +222,293 @@
 	</data>
 </record>
 
-<!-- FORM -->
+
+<!-- ==================== -->
+<!-- FORM                 -->
+<!-- ==================== -->
 
 <record>
 	<data>
 		<property name="1" value="FORM"/>
-		<property name="2" value="FORM_ID_1"/>
-		<property name="3" value="null"/>
-		<property name="4" value="null"/>
-		<property name="5" value="null"/>
-		<property name="6" value="null"/>
-	</data>
-</record>
-
-<!-- ELEMENTTYPES -->
-
-<record>
-	<data>
-		<property name="1" value="ELEMENTTYPES"/>
-		<property name="2" value="TEXT"/>
-		<property name="3" value="
-			var data = arguments[0];
-			var parent = arguments[1];
-			var form = arguments[2];
-			var p = document.createElement('p');
-			p.setAttribute('id', data.typeCd + '_' + data.id + '_wrapper');
-			var label = document.createElement('label');
-			label.setAttribute('for', data.id);
-			p.appendChild(label);
-			var input = document.createElement('input');
-			input.setAttribute('id', data.id);
-			input.setAttribute('type', 'text');
-			p.appendChild(input);
-			parent.appendChild(p);
-			return {
-				attributable: input
-				containable: p
-			};
-		"/>
-		<property name="4" value="null"/>
-		<property name="5" value="null"/>
-		<property name="6" value="null"/>
-	</data>
-</record>
-
-<record>
-	<data>
-		<property name="1" value="ELEMENTTYPES"/>
-		<property name="2" value="SELECT"/>
-		<property name="3" value="
-			var data = arguments[0];
-			var parent = arguments[1];
-			var form = arguments[2];
-			var p = document.createElement('p');
-			p.setAttribute('id', data.typeCd + '_' + data.id + '_wrapper');
-			var label = document.createElement('label');
-			label.setAttribute('for', data.id);
-			p.appendChild(label);
-			var select = document.createElement('select');
-			select.setAttribute('id', data.id);
-			p.appendChild(select);
-			parent.appendChild(p);
-			return {
-				attributable: select
-				containable: p
-			};
-		"/>
-		<property name="4" value="null"/>
-		<property name="5" value="null"/>
-		<property name="6" value="null"/>
-	</data>
-</record>
-
-<record>
-	<data>
-		<property name="1" value="ELEMENTTYPES"/>
-		<property name="2" value="OPTION"/>
-		<property name="3" value="
-			var data = arguments[0];
-			var parent = arguments[1];
-			var form = arguments[2];
-			var option = document.createElement('option');
-			parent.appendChild(option);
-			return {
-				attributable: option
-				containable: option
-			};
-		"/>
-		<property name="4" value="null"/>
-		<property name="5" value="null"/>
-		<property name="6" value="null"/>
-	</data>
-</record>
-
-<record>
-	<data>
-		<property name="1" value="ELEMENTTYPES"/>
-		<property name="2" value="RESETSUBMIT"/>
-		<property name="3" value="
-			var data = arguments[0];
-			var parent = arguments[1];
-			var form = arguments[2];
-			var p = document.createElement('p');
-			p.setAttribute('id', data.typeCd + '_' + data.id + '_wrapper');
-			var reset = document.createElement('input');
-			reset.setAttribute('type', 'reset');
-			p.appendChild(reset);
-			var submit = document.createElement('input');
-			submit.setAttribute('type', 'submit');
-			p.appendChild(submit);
-			parent.appendChild(p);
-			return {
-			};
-		"/>
-		<property name="4" value="null"/>
-		<property name="5" value="null"/>
-		<property name="6" value="null"/>
-	</data>
-</record>
-
-<!-- ELEMENTS -->
-
-<record>
-	<data>
-		<property name="1" value="ELEMENTS"/>
-		<property name="2" value="ELEMENT_ID_1"/>
-		<property name="3" value="null"/>
-		<property name="4" value="TEXT"/>
-		<property name="5" value="FORM_ID_1"/>
-		<property name="6" value="null"/>
-	</data>
-</record>
-
-<record>
-	<data>
-		<property name="1" value="ELEMENTS"/>
-		<property name="2" value="ELEMENT_ID_2"/>
-		<property name="3" value="null"/>
-		<property name="4" value="SELECT"/>
-		<property name="5" value="FORM_ID_1"/>
-		<property name="6" value="null"/>
-	</data>
-</record>
-
-<record>
-	<data>
-		<property name="1" value="ELEMENTS"/>
-		<property name="2" value="ELEMENT_ID_3"/>
-		<property name="3" value="ELEMENT_ID_2"/>
-		<property name="4" value="OPTION"/>
-		<property name="5" value="FORM_ID_1"/>
-		<property name="6" value="null"/>
-	</data>
-</record>
-
-<record>
-	<data>
-		<property name="1" value="ELEMENTS"/>
-		<property name="2" value="ELEMENT_ID_4"/>
-		<property name="3" value="null"/>
-		<property name="4" value="RESETSUBMIT"/>
-		<property name="5" value="FORM_ID_1"/>
-		<property name="6" value="null"/>
-	</data>
-</record>
-
-<!-- ATTRIBUTES -->
-
-<record>
-	<data>
-		<property name="1" value="ATTRIBUTES"/>
-		<property name="2" value="ATTRIBUTE_ID_1"/>
-		<property name="3" value="method"/>
+		<property name="2" value="F00000"/>
+		<property name="3" value="http://www.toronto.ca/"/>
 		<property name="4" value="get"/>
-		<property name="5" value="FORM_ID_1"/>
+		<property name="5" value="Clear"/>
+		<property name="6" value="Send"/>
+	</data>
+</record>
+
+<!-- MODIFIER -->
+
+<record>
+	<data>
+		<property name="1" value="MODIFIER"/>
+		<property name="2" value="F00000_M00"/>
+		<property name="3" value="sampleClass, sampleClass2, sampleClass3"/>
+		<property name="4" value="FORM_CLASS"/>
+		<property name="5" value="null"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+
+<!-- ==================== -->
+<!-- FORM HEADER          -->
+<!-- ==================== -->
+
+<record>
+	<data>
+		<property name="1" value="ELEMENT"/>
+		<property name="2" value="E00000"/>
+		<property name="3" value="NAME"/>
+		<property name="4" value="&lt;h1&gt;Registration Form&lt;/h1&gt;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vulputate rhoncus purus vel sollicitudin. Nam in tristique lectus. Nunc aliquet aliquam consequat. Suspendisse potenti. Sed arcu augue, bibendum et felis et, tincidunt placerat nibh. Proin nec condimentum orci.&lt;/p&gt;"/>
+		<property name="5" value="HTMLCONTENT"/>
 		<property name="6" value="null"/>
 	</data>
 </record>
 
 <record>
 	<data>
-		<property name="1" value="ATTRIBUTES"/>
-		<property name="2" value="ATTRIBUTE_ID_2"/>
-		<property name="3" value="action"/>
-		<property name="4" value="http://www.toronto.ca/"/>
-		<property name="5" value="FORM_ID_1"/>
+		<property name="1" value="ELEMENT"/>
+		<property name="2" value="E00000"/>
+		<property name="3" value="NAME"/>
+		<property name="4" value="&lt;style&gt;body { background-color: #eee; }&lt;/style&gt;"/>
+		<property name="5" value="HTMLCONTENT"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+
+<!-- ==================== -->
+<!-- FIRST NAME           -->
+<!-- ==================== -->
+
+<record>
+	<data>
+		<property name="1" value="ELEMENT"/>
+		<property name="2" value="E00001"/>
+		<property name="3" value="FIRSTNAME"/>
+		<property name="4" value="First Name"/>
+		<property name="5" value="TEXTINPUT"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<!-- MODIFIER -->
+
+<record>
+	<data>
+		<property name="1" value="MODIFIER"/>
+		<property name="2" value="E00001_M00"/>
+		<property name="3" value=""/>
+		<property name="4" value="TEXTINPUT_REQUIRED"/>
+		<property name="5" value="E00001"/>
 		<property name="6" value="null"/>
 	</data>
 </record>
 
 <record>
 	<data>
-		<property name="1" value="ATTRIBUTES"/>
-		<property name="2" value="ATTRIBUTE_ID_3"/>
-		<property name="3" value="class"/>
-		<property name="4" value="sampleClass, sampleClass2"/>
-		<property name="5" value="FORM_ID_1"/>
+		<property name="1" value="MODIFIER"/>
+		<property name="2" value="E00001_M01"/>
+		<property name="3" value="clear"/>
+		<property name="4" value="TEXTINPUT_CLASS"/>
+		<property name="5" value="E00001"/>
 		<property name="6" value="null"/>
 	</data>
 </record>
+
+<!-- ==================== -->
+<!-- LAST NAME            -->
+<!-- ==================== -->
+
+<record>
+	<data>
+		<property name="1" value="ELEMENT"/>
+		<property name="2" value="E00002"/>
+		<property name="3" value="LASTNAME"/>
+		<property name="4" value="Last Name"/>
+		<property name="5" value="TEXTINPUT"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+
+<!-- ==================== -->
+<!-- STREET               -->
+<!-- ==================== -->
+
+<record>
+	<data>
+		<property name="1" value="ELEMENT"/>
+		<property name="2" value="E00003"/>
+		<property name="3" value="STREET"/>
+		<property name="4" value="Street"/>
+		<property name="5" value="TEXTINPUT"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="MODIFIER"/>
+		<property name="2" value="E00001_M01"/>
+		<property name="3" value="clear"/>
+		<property name="4" value="TEXTINPUT_CLASS"/>
+		<property name="5" value="E00003"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+
+<!-- ==================== -->
+<!-- CITY                 -->
+<!-- ==================== -->
+
+<record>
+	<data>
+		<property name="1" value="ELEMENT"/>
+		<property name="2" value="E00004"/>
+		<property name="3" value="CITY"/>
+		<property name="4" value="City"/>
+		<property name="5" value="TEXTINPUT"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<!-- ==================== -->
+<!-- PROVINCE             -->
+<!-- ==================== -->
+
+<record>
+	<data>
+		<property name="1" value="ELEMENT"/>
+		<property name="2" value="E00005"/>
+		<property name="3" value="PROVINCE"/>
+		<property name="4" value="Province"/>
+		<property name="5" value="SELECTINPUT"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="ELEMENT"/>
+		<property name="2" value="E00006"/>
+		<property name="3" value="ONTARIO"/>
+		<property name="4" value="Ontario"/>
+		<property name="5" value="OPTION"/>
+		<property name="6" value="E00005"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="ELEMENT"/>
+		<property name="2" value="E00006"/>
+		<property name="3" value="PROVINCE"/>
+		<property name="4" value="Province"/>
+		<property name="5" value="OPTION"/>
+		<property name="6" value="E00005"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="ELEMENT"/>
+		<property name="2" value="E00006"/>
+		<property name="3" value="PROVINCE"/>
+		<property name="4" value="Province"/>
+		<property name="5" value="OPTION"/>
+		<property name="6" value="E00005"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="ELEMENT"/>
+		<property name="2" value="E00006"/>
+		<property name="3" value="PROVINCE"/>
+		<property name="4" value="Province"/>
+		<property name="5" value="OPTION"/>
+		<property name="6" value="E00005"/>
+	</data>
+</record>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+<record>
+	<data>
+		<property name="1" value="ELEMENT"/>
+		<property name="2" value="ELEMENT_ID_1"/>
+		<property name="3" value="STREET"/>
+		<property name="4" value="Street"/>
+		<property name="5" value="TEXTINPUT"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="ELEMENT"/>
+		<property name="2" value="ELEMENT_ID_2"/>
+		<property name="3" value="ADDRESS"/>
+		<property name="4" value="ADDRESS"/>
+		<property name="5" value="TEXTINPUT"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="ELEMENT"/>
+		<property name="2" value="ELEMENT_ID_3"/>
+		<property name="3" value="STATUS"/>
+		<property name="4" value="STATUS"/>
+		<property name="5" value="SELECTINPUT"/>
+		<property name="6" value="null"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="ELEMENT"/>
+		<property name="2" value="ELEMENT_ID_4"/>
+		<property name="3" value="SINGLE"/>
+		<property name="4" value="SINGLE"/>
+		<property name="5" value="OPTION"/>
+		<property name="6" value="ELEMENT_ID_3"/>
+	</data>
+</record>
+
+<record>
+	<data>
+		<property name="1" value="ELEMENT"/>
+		<property name="2" value="ELEMENT_ID_5"/>
+		<property name="3" value="MULTIPLE"/>
+		<property name="4" value="MULTIPLE"/>
+		<property name="5" value="OPTION"/>
+		<property name="6" value="ELEMENT_ID_3"/>
+	</data>
+</record>
+-->
+
+
+
 
 </records>
 
