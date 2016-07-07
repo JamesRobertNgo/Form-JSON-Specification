@@ -96,6 +96,13 @@ where
 | PK | MODIFIERTYPE_CD                     |
 |    | CODE                                |
 |    | NEEDVALUE                           |
+\*========================================*/
+
+/*========================================*\
+| MODIFIERTYPE_ELEMENTTYPE                 |
+|==========================================|
+| PK | MODIFIERTYPE_ELEMENTTYPE_ID         |
+| FK | MODIFIERTYPE_CD                     |
 | FK | ELEMENTTYPE_CD                      |
 \*========================================*/
 
