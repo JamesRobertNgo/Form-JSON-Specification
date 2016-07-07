@@ -17,15 +17,11 @@
 			var data = arguments[0];
 			var parent = arguments[1];
 			var form = arguments[2];
-			
-			
 			var div = document.createElement('div');
 			div.innerHTML = data.label;
 			if (!!parent) {
 				parent.appendChild(div);
 			};
-			
-			
 			return {
 				element: div,
 				parent: div
@@ -45,30 +41,21 @@
 			var data = arguments[0];
 			var parent = arguments[1];
 			var form = arguments[2];
-			
-			
 			var p = document.createElement('p');
 			p.setAttribute('id', data.typeCd + '_' + data.id + '_wrapper');
 			p.setAttribute('class', data.typeCd);
-			
 			var label = document.createElement('label');
 			label.innerHTML = data.label;
 			label.setAttribute('for', data.id);
 			label.setAttribute('id', data.id);
-			
 			p.appendChild(label);
-			
 			var input = document.createElement('input');
 			input.setAttribute('id', data.typeCd + '_' + data.id + '_label');
 			input.setAttribute('name', data.name);
-			
 			p.appendChild(input);
-			
 			if (!!parent) {
 				parent.appendChild(p);
 			};
-			
-			
 			return {
 				element: p,
 				parent: null
@@ -88,29 +75,19 @@
 			var data = arguments[0];
 			var parent = arguments[1];
 			var form = arguments[2];
-			
 			var p = document.createElement('p');
 			p.setAttribute('id', data.typeCd + '_' + data.id + '_wrapper');
 			var label = document.createElement('label');
 			label.innerHTML = data.label;
 			label.setAttribute('for', data.id);
 			p.appendChild(label);
-			
 			var select = document.createElement('select');
 			select.setAttribute('id', data.typeCd + '_' + data.id);
 			select.setAttribute('name', data.name);
 			p.appendChild(select);
-			
-			form.onsubmit = function() {
-				if (select.value == null) {
-					return false;
-				}
-			}
-			
 			if (!!parent) {
 				parent.appendChild(p);
 			};
-			
 			return {
 				element: p,
 				parent: select
